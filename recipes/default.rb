@@ -75,7 +75,7 @@ nginx_passenger_site node["rails-app"]["name"] do
   action        :create
   dir           "#{node["rails-app"]["path"]}/current"
   server        node["rails-app"]["address"]
-  generate_cert true if node["rails-app"]["ssl"]
+  generate_cert node["rails-app"]["ssl"]
 end
 
 service "nginx" do
