@@ -22,6 +22,8 @@ db_database =  node["rails-app"]["db_name"]
 db_username =  node["rails-app"]["db_username"]
 db_password =  node["rails-app"]["db_password"]
 
+# Add the base url as a known host to avoid error 128 on git clone via ssh.
+ssh_known_hosts_entry node["rails-app"]["repository"].gsub(/^\w*(:\/\/|@)([^:\/]+)(:|\/)[\w:\/\.]*$/,'\2')
 
 application node["rails-app"]["name"] do
   action    node["rails-app"]["action"]
