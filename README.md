@@ -139,6 +139,12 @@ Attributes
     <td><tt>[]</tt></td>
   </tr>
   <tr>
+    <td><tt>["rails-app"]["ssl"]</tt></td>
+    <td>Boolean</td>
+    <td>Should I use SSL?</td>
+    <td><tt>false</tt></td>
+  </tr>
+  <tr>
     <td><tt>["rails-app"]["precompile_assets"]</tt></td>
     <td>Boolean</td>
     <td>Shoudl assets be precompiled?</td>
@@ -169,7 +175,7 @@ Contributing
 To DO
 -----
 
-* Make recipe less fragile to different versions of ruby. Currently if the C compiler prefix (gems/[b]2.1.0[/b]/gems) is changed then the recipe will break, that should not happen.
+* Make recipe less fragile to different versions of ruby. Currently if the C compiler prefix (gems/**2.1.0**/gems) is changed then the recipe will break, that should not happen.
 
 License and Authors
 -------------------
