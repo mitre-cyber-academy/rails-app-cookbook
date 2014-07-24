@@ -57,7 +57,7 @@ Vagrant.configure("2") do |config|
     chef.json = {
         "rails-app" => {
             "name" => "registration-app",
-            "ssl" => "false",
+            "ssl" => false,
             "repository" => "https://github.com/mitre-cyber-academy/registration-app.git"
         }
     }
