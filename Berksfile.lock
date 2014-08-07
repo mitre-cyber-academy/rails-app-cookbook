@@ -3,6 +3,9 @@ DEPENDENCIES
     git: https://github.com/rbclark/nginx_passenger-cookbook.git
     revision: f4796cf00ac61f13b9acf33cf7c46d5d70d73e3f
     branch: generateCertificates
+  postgresql
+    git: https://github.com/SimonKaluza/postgresql.git
+    revision: 51ac50f331cd552c8c95b49b5a6f5fe75cfd3666
   rails-app
     path: .
     metadata: true

@@ -1,7 +1,7 @@
 require "securerandom"
 
 default["rails-app"]["name"] = "default"
-default["rails-app"]["address"] = node['fqdn'] # Only required for ssl sites anyway.
+default["rails-app"]["address"] = node['fqdn'] || node["rails-app"]["name"] # Only required for ssl sites anyway.
 default["rails-app"]["action"] = :deploy
 default["rails-app"]["path"] = "/opt/#{node["rails-app"]["name"]}"
 default["rails-app"]["deploy_key"] = nil
