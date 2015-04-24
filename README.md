@@ -164,6 +164,14 @@ Usage
 
 Just include `rails-app::default` in your node's `run_list` and override attributes as needed. Generally you will need to override the name, host and repository to download from. An example of this is in the Vagrantfile in this repository.
 
+Developing
+----------
+
+1. Install the ChefDK (https://downloads.chef.io/chef-dk/)
+2. If you are using rbenv, make sure you add add `export PATH="/opt/chefdk/bin:$PATH"` to your `~/.bash_profile` after your rbenv init line.
+3. If you get an error stating 'permission denied' when running `vagrant provision`, try running `chmod -R 755 ~/.berkshelf/vagrant-berkshelf/`.
+
+
 Contributing
 ------------
 
