@@ -13,17 +13,55 @@ end
 
 include_recipe "apt::default"
 include_recipe "build-essential::default"
-include_recipe "rackbox::default"
-include_recipe "databox::default"
+include_recipe "postgresql::server"
+include_recipe "database::postgresql"
+include_recipe "nginx_passenger::default"
 
 db_adapter  =  node["rails-app"]["db_adapter"]
 db_host     =  node["rails-app"]["db_host"]
 db_database =  node["rails-app"]["db_name"]
 db_username =  node["rails-app"]["db_username"]
 db_password =  node["rails-app"]["db_password"]
+db_port     =  node["rails-app"]["db_port"]
 
 # Add the base url as a known host to avoid error 128 on git clone via ssh.
-ssh_known_hosts_entry node["rails-app"]["repository"].gsub(/^\w*(:\/\/|@)([^:\/]+)(:|\/)[\w:\/\.]*$/,'\2')
+ssh_known_hosts_entry node["rails-app"]["repository"].gsub(/^\w*(:\/\/|@)([^:\/]+).*$/,'\2')
+
+# Create rails app database
+postgresql_database db_database do
+  connection(
+    :host      => db_host,
+    :port      => db_port,
+    :username  => db_username,
+    :password  => db_password
+  )
+  action :create
+end
+
+# Install git to clone packages
+apt_package "git" do
+  action :install
+end
+
+apt_repository 'ruby-ng' do
+  uri          'ppa:brightbox/ruby-ng'
+  distribution node['lsb']['codename']
+  components   ["main"]
+end
+
+ruby_version = node['rails-app']['ruby-version']
+
+# Install ruby
+["ruby#{ruby_version}", "ruby#{ruby_version}-dev", "ruby-switch"].each do |pkg|
+  package pkg do
+    action :install
+  end
+end
+
+execute "ruby-switch --set ruby#{ruby_version}" do
+  action :run
+  not_if "ruby-switch --check | grep -q 'ruby#{ruby_version}'"
+end
 
 application node["rails-app"]["name"] do
   action    node["rails-app"]["action"]
@@ -67,7 +105,7 @@ application node["rails-app"]["name"] do
   end
 end
 
-nginx_passenger_site "000-default" do
+nginx_passenger_site "default" do
   action :delete
 end
 

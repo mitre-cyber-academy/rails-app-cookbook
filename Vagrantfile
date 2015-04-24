@@ -4,7 +4,7 @@ solo_json = File.join(root, "node.json")
 Vagrant.configure("2") do |config|
 
   # Install required plugins
-  plugins = ['vagrant-omnibus', "vagrant-berkshelf --plugin-version '2.0.0.rc3'"]
+  plugins = ['vagrant-omnibus', "vagrant-berkshelf"]
   # Vagrant does not detect new plugins right away. In order to get around this, if we 
   # have added any plugins then we simply set reload to true and tell the user to re-run
   # the vagrant command.
@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
   # Install the latest version of Chef (uses https://github.com/schisamo/vagrant-omnibus)
   config.omnibus.chef_version = :latest
 
-  config.vm.box = "hashicorp/precise64"
+  config.vm.box = "ubuntu/precise64"
   config.vm.network :forwarded_port, guest: 80, host: 8080, auto_correct: true
 
   # https://github.com/cloudbau/vagrant-openstack-plugin this block for overriding of the default box
@@ -58,7 +58,8 @@ Vagrant.configure("2") do |config|
         "rails-app" => {
             "name" => "registration-app",
             "ssl" => false,
-            "repository" => "https://github.com/mitre-cyber-academy/registration-app.git"
+            "repository" => "https://github.com/mitre-cyber-academy/registration-app.git",
+            "revision" => "moveToRails4"
         }
     }
     chef.run_list = [
