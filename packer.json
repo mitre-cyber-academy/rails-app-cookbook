@@ -1,0 +1,28 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "ubuntu:precise",
+      "export_path": "web300.tar"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["apt-get -y update; apt-get install -y curl"]
+    },
+    {
+      "type": "chef-solo",
+      "cookbook_paths": ["cookbooks"],
+      "run_list": ["recipe[rails-app::default]"],
+      "prevent_sudo": true,
+      "json": {        
+        "rails-app": {
+            "name": "registration-app",
+            "ssl": false,
+            "repository": "https://github.com/mitre-cyber-academy/registration-app.git",
+            "revision": "moveToRails4"
+        }}
+    }
+  ]
+}
