@@ -3,7 +3,7 @@
     {
       "type": "docker",
       "image": "ubuntu:precise",
-      "export_path": "web300.tar"
+      "export_path": "registration-app.tar"
     }
   ],
   "provisioners": [
