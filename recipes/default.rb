@@ -24,6 +24,13 @@ db_username =  node["rails-app"]["db_username"]
 db_password =  node["rails-app"]["db_password"]
 db_port     =  node["rails-app"]["db_port"]
 
+# Install openssh-client package in order to prevent errors in ssh_known_hosts_entry
+# This can be removed if/when https://github.com/opscode-cookbooks/ssh_known_hosts/issues/41
+# is resolved.
+apt_package "openssh-client" do
+  action :install
+end
+
 # Add the base url as a known host to avoid error 128 on git clone via ssh.
 ssh_known_hosts_entry node["rails-app"]["repository"].gsub(/^\w*(:\/\/|@)([^:\/]+).*$/,'\2')
 

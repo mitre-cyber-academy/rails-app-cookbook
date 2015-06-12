@@ -1,0 +1,42 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "ubuntu:trusty",
+      "commit": true
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["apt-get -y update; apt-get install -y curl libjson-perl"]
+    },
+    {
+      "type": "chef-solo",
+      "cookbook_paths": ["cookbooks"],
+      "run_list": ["recipe[rails-app::default]"],
+      "prevent_sudo": true,
+      "json": {        
+        "rails-app": {
+            "name": "registration-app",
+            "ssl": false,
+            "repository": "https://github.com/mitre-cyber-academy/registration-app.git",
+            "revision": "moveToRails4"
+        }}
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-dockerfile",
+        "cmd": "service postgresql start && nginx -g \"daemon off;\"",
+        "expose": [80, 443]
+      },
+      {
+        "type": "docker-tag",
+        "repository": "mitrectf/registration-app",
+        "tag": "4.2.1.0"
+      }
+    ]
+  ]
+}

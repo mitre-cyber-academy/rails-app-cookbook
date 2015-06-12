@@ -1,4 +1,8 @@
 DEPENDENCIES
+  postgresql
+    git: https://github.com/mitre-cyber-academy/postgresql.git
+    revision: 5d056092ed7dae32229b6086c31a1071d3ec8d4b
+    branch: fixRestartError
   rails-app
     path: .
     metadata: true
@@ -46,7 +50,7 @@ GRAPH
   passenger_apache2 (2.2.3)
     apache2 (~> 1.0)
     build-essential (>= 0.0.0)
-  postgresql (3.4.18)
+  postgresql (3.4.19)
     apt (>= 1.9.0)
     build-essential (>= 0.0.0)
     openssl (~> 4.0.0)
