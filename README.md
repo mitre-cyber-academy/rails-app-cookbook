@@ -164,6 +164,33 @@ Usage
 
 Just include `rails-app::default` in your node's `run_list` and override attributes as needed. Generally you will need to override the name, host and repository to download from. An example of this is in the Vagrantfile in this repository.
 
+Packer with Docker
+------------------
+
+This recipe includes a packer.json file that will build a Docker image and commit it to your local computer. In order to use it you will need to setup your environment first. (Note that this is only tested on Ubuntu 15.04. It should work on other versions of Ubuntu but has some bugs that cause it to not work on OS X, and Windows was not considered.)
+
+1. git - `sudo apt-get install git`
+2. Docker - `sudo apt-get install docker.io`
+3. Download the temporary patched version of packer to work with docker 1.5 located [here](https://github.com/mitre-cyber-academy/rails-app-cookbook) until the [related github issue](https://github.com/mitre-cyber-academy/rails-app-cookbook) is fixed.
+4. `wget https://bintray.com/artifact/download/alkersan/generic/packer_0.8.0_linux_amd64.zip`
+5. `sudo apt-get install unzip`
+6. `unzip packer_0.8.0_linux_amd64.zip`
+7. `sudo mv packer* /usr/local/bin/`
+8. Install the docker post-processor onto packer. (steps below)
+9. Install go - `sudo apt-get install golang-go`
+10. Install mercurial - `sudo apt-get install mercurial`
+11. `mkdir ~/go`
+12. Add the next two lines to .bashrc
+13. `export GOPATH=~/go`
+14. `export PATH=$PATH:$GOPATH/bin`
+15. `git clone https://github.com/avishai-ish-shalom/packer-post-processor-docker-dockerfile.git ~/packer-post-processor-docker-dockerfile`
+16. `cd ~/packer-post-processor-docker-dockerfile`
+17. `go get github.com/nitrous-io/goop && go build github.com/nitrous-io/goop`
+18. `goop install` - if you get an error on this step, try the build step anyway, it may work.
+19. `goop go build`
+20. `mv packer-post-processor-docker-dockerfile /usr/local/bin`
+21. At this point you can run `packer build packer.json` in the root directory of this project.
+
 Developing
 ----------
 
