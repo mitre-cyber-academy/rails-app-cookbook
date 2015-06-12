@@ -2,14 +2,14 @@
   "builders": [
     {
       "type": "docker",
-      "image": "ubuntu:precise",
-      "export_path": "registration-app.tar"
+      "image": "ubuntu:trusty",
+      "commit": true
     }
   ],
   "provisioners": [
     {
       "type": "shell",
-      "inline": ["apt-get -y update; apt-get install -y curl"]
+      "inline": ["apt-get -y update; apt-get install -y curl libjson-perl"]
     },
     {
       "type": "chef-solo",
@@ -24,5 +24,19 @@
             "revision": "moveToRails4"
         }}
     }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-dockerfile",
+        "cmd": "service postgresql start && nginx -g \"daemon off;\"",
+        "expose": [80, 443]
+      },
+      {
+        "type": "docker-tag",
+        "repository": "mitrectf/registration-app",
+        "tag": "4.2.1.0"
+      }
+    ]
   ]
 }
