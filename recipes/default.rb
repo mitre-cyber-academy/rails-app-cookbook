@@ -32,7 +32,7 @@ apt_package "openssh-client" do
 end
 
 # Add the base url as a known host to avoid error 128 on git clone via ssh.
-ssh_known_hosts_entry node["rails-app"]["repository"].gsub(/^\w*(:\/\/|@)([^:\/]+).*$/,'\2')
+ssh_known_hosts_entry node["rails-app"]["repository"].match(/^\w*(:\/\/|@)([^:\/]+).*$/)[2]
 
 # Create rails app database
 postgresql_database db_database do
