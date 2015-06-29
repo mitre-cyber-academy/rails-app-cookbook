@@ -169,6 +169,7 @@ Packer with Docker
 
 This recipe includes a packer.json file that will build a Docker image and commit it to your local computer. In order to use it you will need to setup your environment first. (Note that this is only tested on Ubuntu 15.04. It should work on other versions of Ubuntu but has some bugs that cause it to not work on OS X, and Windows was not considered.)
 
+0. Perform the steps listed in the [Developing](https://github.com/mitre-cyber-academy/rails-app-cookbook#developing) section.
 1. git - `sudo apt-get install git`
 2. Docker - `sudo apt-get install docker.io`
 3. Download the temporary patched version of packer to work with docker 1.5 located [here](https://bintray.com/alkersan/generic/packer/view) until the [related github issue](https://github.com/mitchellh/packer/issues/1752) is fixed.
