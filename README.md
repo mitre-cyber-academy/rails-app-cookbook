@@ -171,7 +171,7 @@ This recipe includes a packer.json file that will build a Docker image and commi
 
 1. git - `sudo apt-get install git`
 2. Docker - `sudo apt-get install docker.io`
-3. Download the temporary patched version of packer to work with docker 1.5 located [here](https://github.com/mitre-cyber-academy/rails-app-cookbook) until the [related github issue](https://github.com/mitre-cyber-academy/rails-app-cookbook) is fixed.
+3. Download the temporary patched version of packer to work with docker 1.5 located [here](https://bintray.com/alkersan/generic/packer/view) until the [related github issue](https://github.com/mitchellh/packer/issues/1752) is fixed.
 4. `wget https://bintray.com/artifact/download/alkersan/generic/packer_0.8.0_linux_amd64.zip`
 5. `sudo apt-get install unzip`
 6. `unzip packer_0.8.0_linux_amd64.zip`
