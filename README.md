@@ -190,7 +190,10 @@ This recipe includes a packer.json file that will build a Docker image and commi
 18. `goop install` - if you get an error on this step, try the build step anyway, it may work.
 19. `goop go build`
 20. `mv packer-post-processor-docker-dockerfile /usr/local/bin`
-21. At this point you can run `packer build packer.json` in the root directory of this project.
+21. `berks vendor cookbooks`
+22. `sudo su`
+23. `service docker start`
+24. At this point you can run `packer build packer.json` in the root directory of this project.
 
 Developing
 ----------
