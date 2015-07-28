@@ -50,6 +50,7 @@ Vagrant.configure("2") do |config|
             "revision" => "moveToRails4"
         }
     }
+    chef.log_level = :debug
     chef.run_list = [
         "recipe[rails-app::default]"
     ]
