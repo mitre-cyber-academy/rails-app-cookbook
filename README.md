@@ -195,6 +195,36 @@ This recipe includes a packer.json file that will build a Docker image and commi
 23. `service docker start`
 24. At this point you can run `packer build packer.json` in the root directory of this project.
 
+Debugging Packer with Docker
+----------------------------
+
+If there is a problem happening with the Packer build, it is rather simply to turn on chef debugging output, however poorly documented. In the packer.json file, the provisioner block should be changed to include an override block like below. It will then spit out chef debugging output which is much more useful in the case of an error.
+
+    "provisioners": [
+      {
+        "type": "shell",
+        "inline": ["apt-get -y update; apt-get install -y curl libjson-perl"]
+      },
+      {
+        "type": "chef-solo",
+        "cookbook_paths": ["cookbooks"],
+        "run_list": ["recipe[rails-app::default]"],
+        "prevent_sudo": true,
+        "json": {        
+          "rails-app": {
+              "name": "registration-app",
+              "ssl": false,
+              "repository": "https://github.com/mitre-cyber-academy/registration-app.git",
+              "revision": "moveToRails4"
+          }},
+        "override": {
+          "docker": {
+            "execute_command": "chef-solo -l debug --no-color -c {{.ConfigPath}} -j {{.JsonPath}}"
+          }
+        }
+      }
+    ]
+
 Developing
 ----------
 
