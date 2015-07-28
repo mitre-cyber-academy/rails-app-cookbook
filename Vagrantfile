@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
   config.omnibus.chef_version = :latest
 
   config.vm.provider :virtualbox do |vb,override|
-    override.vm.box = "ubuntu/precise64"
+    override.vm.box = "ubuntu/trusty64"
     override.vm.network :forwarded_port, guest: 80, host: 8080, auto_correct: true
     vb.customize ["modifyvm", :id, 
       "--memory", "1024", 
