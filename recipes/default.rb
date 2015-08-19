@@ -82,14 +82,24 @@ application node["rails-app"]["name"] do
 
   environment_name node["rails-app"]["environment"]
 
-  # useful commands
   migrate           node["rails-app"]["migrate"]
-  migration_command node["rails-app"]["migration_command"]
 
   before_migrate do
     node["rails-app"]["delete_before_bundle"].each do |filename|
       file "#{new_resource.release_path}/#{filename}" do
         action :delete
+      end
+    end
+    template "#{new_resource.release_path}/config/secrets.yml" do
+      source "secrets.yml.erb"
+      mode 0664
+      owner "root"
+      group "root"
+      variables({ :environment => node["rails-app"]["ruby-environment"] })
+      # Only run this if the secrets file does not exist or a secret_token file does not exist.
+      not_if do 
+        ::File.exist?("#{new_resource.release_path}/config/secrets.yml") \
+        || ::File.exist?("#{new_resource.release_path}/config/initializers/secret_token.rb")
       end
     end
   end

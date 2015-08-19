@@ -24,6 +24,9 @@ default["rails-app"]["ssl"] = false
 default["rails-app"]["ruby-version"] = "2.2" # Ruby version from brightbox
 default["rails-app"]["precompile_assets"] = true
 default["rails-app"]["delete_before_bundle"] = [".rbenv-version", ".ruby-version"]
+default["rails-app"]["ruby-environment"] = {
+  'secret_key_base'   => ::SecureRandom.hex(128)
+}
 normal['postgresql']['password']['postgres'] = node["rails-app"]["db_password"]
 normal['apt']['compile_time_update'] = true
 normal['authorization']['sudo']['include_sudoers_d'] = true

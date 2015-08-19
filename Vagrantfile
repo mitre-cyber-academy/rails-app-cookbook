@@ -30,21 +30,8 @@ Vagrant.configure("2") do |config|
   # Install the latest version of Chef (uses https://github.com/schisamo/vagrant-omnibus)
   config.omnibus.chef_version = :latest
 
-
-
-  # https://github.com/cloudbau/vagrant-openstack-plugin this block for overriding of the default box
-  # if you are using the openstack provider.
-  # vagrant box add dummy https://github.com/cloudbau/vagrant-openstack-plugin/raw/master/dummy.box to add box.
-  config.vm.provider :openstack do |os,override|
-    override.vm.box = "dummy"
-    override.vm.box_url = "https://github.com/cloudbau/vagrant-openstack-plugin/raw/master/dummy.box"
-    # Set the server name to something more specific in openstack.
-    os.server_name = "rails-app-cookbook"
-    os.security_groups = ["default","web-server"]
-  end
-
   config.vm.provider :virtualbox do |vb,override|
-    override.vm.box = "ubuntu/precise64"
+    override.vm.box = "ubuntu/trusty64"
     override.vm.network :forwarded_port, guest: 80, host: 8080, auto_correct: true
     vb.customize ["modifyvm", :id, 
       "--memory", "1024", 
@@ -63,6 +50,7 @@ Vagrant.configure("2") do |config|
             "revision" => "moveToRails4"
         }
     }
+    chef.log_level = :debug
     chef.run_list = [
         "recipe[rails-app::default]"
     ]
