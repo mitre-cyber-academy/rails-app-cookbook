@@ -42,17 +42,10 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "."
-    chef.json = {
-        "rails-app" => {
-            "name" => "registration-app",
-            "ssl" => false,
-            "repository" => "https://github.com/mitre-cyber-academy/registration-app.git",
-            "revision" => "moveToRails4"
-        }
-    }
+    chef.json = JSON.parse(File.open(solo_json, &:read))
+    chef.json["run_list"].each do |recipe_name|
+      chef.add_recipe recipe_name
+    end
     chef.log_level = :debug
-    chef.run_list = [
-        "recipe[rails-app::default]"
-    ]
   end
 end
