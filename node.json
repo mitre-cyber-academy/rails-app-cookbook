@@ -1,0 +1,9 @@
+{
+  "rails-app" : {
+    "name" : "registration-app",
+    "ssl" : false,
+    "repository" : "https://github.com/mitre-cyber-academy/registration-app.git",
+    "revision" : "moveToRails4"
+  },
+  "run_list": [ "recipe[rails-app::default]" ]
+}
